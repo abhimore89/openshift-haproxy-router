@@ -8,7 +8,7 @@
 global
   # maxconn 4096
   daemon
-  log /var/log/hap local0
+  log 127.0.0.1 local0
   ca-base /etc/ssl
   crt-base /etc/ssl
   stats socket /var/lib/haproxy/run/haproxy.sock mode 600 level admin

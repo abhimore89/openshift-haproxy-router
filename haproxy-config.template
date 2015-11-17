@@ -61,8 +61,7 @@ frontend public
   bind :80
   mode http
   option httplog
-  capture request header User-Agent
-  capture request header x-caplatform-transaction-id
+
   tcp-request inspect-delay 5s
   tcp-request content accept if HTTP
 

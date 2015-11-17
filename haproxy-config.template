@@ -61,6 +61,8 @@ frontend public
   bind :80
   mode http
   option httplog
+  capture request header User-Agent
+  capture request header x-caplatform-transaction-id
   tcp-request inspect-delay 5s
   tcp-request content accept if HTTP
 
@@ -111,7 +113,8 @@ frontend fe_sni
   bind 127.0.0.1:10444 ssl no-sslv3 {{ if (len .DefaultCertificate) gt 0 }}crt {{.DefaultCertificate}}{{ else }}crt /var/lib/haproxy/conf/default_pub_keys.pem{{ end }} crt {{ $workingDir }}/certs accept-proxy
   mode http
   option httplog
-
+  capture request header User-Agent
+  capture request header x-caplatform-transaction-id
   # check re-encrypt backends first - from most specific to general path.
   acl reencrypt base,map_beg(/var/lib/haproxy/conf/os_reencrypt.map) -m found
 

@@ -61,7 +61,8 @@ frontend public
   bind :80
   mode http
   option httplog
-  capture request header User-Agent len 32
+  capture request header Host len 32
+  log-format %hr %r %st %B %Tr
   tcp-request inspect-delay 5s
   tcp-request content accept if HTTP
 

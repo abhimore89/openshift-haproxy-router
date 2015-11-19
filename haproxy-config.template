@@ -62,7 +62,6 @@ frontend public
   mode http
   option httplog
   capture request header Host len 32
-  log-format %hr %r %st %B %Tr
   tcp-request inspect-delay 5s
   tcp-request content accept if HTTP
 

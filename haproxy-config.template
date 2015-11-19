@@ -57,6 +57,7 @@ listen stats :{{.StatsPort}}
     stats auth {{.StatsUser}}:{{.StatsPassword}}
 {{ end }}
 
+
 frontend public
   bind :80
   mode http

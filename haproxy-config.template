@@ -1,7 +1,7 @@
 {{/*
     haproxy-config.cfg: contains the main config with helper backends that are used to terminate
-    					encryption before finally sending to a host_be which is the backend that is the final
-    					backend for a route and contains all the endpoints for the service
+                                        encryption before finally sending to a host_be which is the backend that is the final
+                                        backend for a route and contains all the endpoints for the service
 */}}
 {{ define "/var/lib/haproxy/conf/haproxy.config" }}
 {{ $workingDir := .WorkingDir }}
@@ -43,7 +43,7 @@ defaults
 {{ if and (and (ne .StatsUser "") (ne .StatsPassword "")) (gt .StatsPort 0) }}
 listen stats :{{.StatsPort}}
     mode http
-   
+
     # Health check monitoring uri.
     monitor-uri /healthz
 
@@ -56,7 +56,6 @@ listen stats :{{.StatsPort}}
     stats uri /
     stats auth {{.StatsUser}}:{{.StatsPassword}}
 {{ end }}
-
 
 frontend public
   bind :80
@@ -116,6 +115,7 @@ frontend fe_sni
   option httplog
   capture request header User-Agent len 32
   capture request header x-caplatform-transaction-id len 32
+
   # check re-encrypt backends first - from most specific to general path.
   acl reencrypt base,map_beg(/var/lib/haproxy/conf/os_reencrypt.map) -m found
 
@@ -152,7 +152,7 @@ frontend fe_no_sni
   option httplog
   capture request header User-Agent len 32
   capture request header x-caplatform-transaction-id len 32
-
+  
   # check re-encrypt backends first - path or host based.
   acl reencrypt base,map_beg(/var/lib/haproxy/conf/os_reencrypt.map) -m found
 
@@ -291,7 +291,7 @@ backend be_secure_{{$cfgIdx}}
 
 {{/*
     os_sni_passthrough.map: contains a mapping of routes that expect to have an sni header and should be passed
-    					through to the host_be.  Driven by the termination type of the ServiceAliasConfigs
+                                        through to the host_be.  Driven by the termination type of the ServiceAliasConfigs
 */}}
 {{ define "/var/lib/haproxy/conf/os_sni_passthrough.map" }}
 {{   range $id, $serviceUnit := .State }}

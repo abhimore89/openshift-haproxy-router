@@ -88,14 +88,14 @@ frontend public_ssl
   # if the connection is SNI and the route is a passthrough don't use the termination backend, just use the tcp backend
   acl sni req.ssl_sni -m found
   acl sni_passthrough req.ssl_sni,map(/var/lib/haproxy/conf/os_sni_passthrough.map) -m found
-  use_backend be_tcp_%[req.ssl_sni,map(/var/lib/haproxy/conf/os_tcp_be.map)] if sni sni_passthrough
-
+  use_backend be_tcp_%[req.ssl_sni,map(/var/lib/haproxy/conf/os_tcp_be.map)] 
+  
   # if the route is SNI and NOT passthrough enter the termination flow
-  use_backend be_sni if sni
+  #use_backend be_sni if sni
 
   # non SNI requests should enter a default termination backend rather than the custom cert SNI backend since it
   # will not be able to match a cert to an SNI host
-  default_backend be_no_sni
+  #default_backend be_no_sni
 
 ##########################################################################
 # TLS SNI
@@ -155,6 +155,7 @@ frontend fe_no_sni
   mode http
   option httplog
   capture request header User-Agent len 32
+  capture request header Host len 64
   capture request header x-caplatform-transaction-id len 32
   
   # check re-encrypt backends first - path or host based.

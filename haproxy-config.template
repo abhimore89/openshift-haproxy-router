@@ -117,6 +117,7 @@ frontend fe_sni
   mode http
   option httplog
   capture request header User-Agent len 32
+  capture request header Host len 64
   capture request header x-caplatform-transaction-id len 32
 
   # check re-encrypt backends first - from most specific to general path.

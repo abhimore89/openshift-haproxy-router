@@ -62,6 +62,7 @@ frontend public
   mode http
   option httplog
   capture request header User-Agent len 32
+  capture request header Host len 64
   capture request header x-caplatform-transaction-id len 32
   tcp-request inspect-delay 5s
   tcp-request content accept if HTTP
@@ -80,6 +81,7 @@ frontend public
 frontend public_ssl
   bind :443
   option tcplog
+  capture request header Host len 64
   tcp-request  inspect-delay 5s
   tcp-request content accept if { req_ssl_hello_type 1 }
 
